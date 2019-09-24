@@ -1,16 +1,20 @@
+project(sphere)
 cmake_minimum_required(VERSION 2.8)
 
-project(sphericalStars)
+SET(CMAKE_CXX_COMPILER /usr/bin/g++)
+
+find_package(Eigen3 REQUIRED)
+find_package(Sophus REQUIRED)
 
 include_directories(
-  ${PROJECT_SOURCE_DIR}
+  ${EIGEN3_INCLUDE_DIR}
+  ${Sophus_INCLUDE_DIRS}
   )
 
-set(srcs
-    ${PROJECT_SOURCE_DIR}/mref.cpp
-    ${PROJECT_SOURCE_DIR}/mdata.cpp
-    ${PROJECT_SOURCE_DIR}/mio.cpp
-    ${PROJECT_SOURCE_DIR}/calculate.cpp
-  )
+aux_source_directory(. SRC_LIST)
+add_executable(${PROJECT_NAME} ${SRC_LIST})
 
-add_executable(${PROJECT_NAME} ${srcs}  "main.cpp")
+target_link_libraries(${PROJECT_NAME}
+  ${EIGEN3_LIBS}
+  ${Sophus_LIBRARIES}
+  )
